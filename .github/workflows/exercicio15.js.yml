@@ -1,6 +1,7 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
+
 name: Exercicio Modulo 15
 
 on:
@@ -11,18 +12,26 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js 
-      uses: actions/setup-node@v4
-      with:
-        node-version: 18
-        cache: 'npm'
-    - name: Instalar Dependencias
-      run: npm install
+      - uses: actions/checkout@v4
 
-    - name: Executar Testes
-      run: npx cypress run
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Instalar Dependencias
+        run: npm install
+
+      - name: Instalar Cypress
+        run: npx cypress install
+
+      - name: Verificar Cypress
+        run: npx cypress verify
+
+      - name: Executar Testes
+        run: npx cypress run --browser electron
