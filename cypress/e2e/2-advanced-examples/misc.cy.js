@@ -5,21 +5,14 @@ context('Misc', () => {
     cy.visit('https://example.cypress.io/commands/misc')
   })
 
-  it('.end() - end the command chain', () => {
-    // Verifica o conteúdo da página carregada
-    cy.document().then((doc) => {
-      cy.log(`Elemento encontrado: ${!!doc.querySelector('.misc-table')}`)
-      console.log(doc.body.innerHTML)
-    })
+it('diagnostica página misc', () => {
+  cy.get('body').then(($body) => {
+    const bodyText = $body.text().replace(/\s+/g, ' ').trim()
 
-    // Teste original
-    cy.get('.misc-table').within(() => {
-      // ends the current chain and yields null
-      cy.contains('Cheryl').click().end()
-
-      // queries the entire table again
-      cy.contains('Charles').click()
-    })
+    throw new Error(
+      `MISC_TABLE=${$body.find('.misc-table').length}; BODY=${bodyText.slice(0, 1000)}`
+    )
+  })
   })
 
   it('cy.exec() - execute a system command', () => {
