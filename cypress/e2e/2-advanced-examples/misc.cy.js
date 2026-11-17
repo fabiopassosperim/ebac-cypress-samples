@@ -6,10 +6,13 @@ context('Misc', () => {
   })
 
   it('.end() - end the command chain', () => {
-    // https://on.cypress.io/end
+    // Verifica o conteúdo da página carregada
+    cy.document().then((doc) => {
+      cy.log(`Elemento encontrado: ${!!doc.querySelector('.misc-table')}`)
+      console.log(doc.body.innerHTML)
+    })
 
-    // cy.end is useful when you want to end a chain of commands
-    // and force Cypress to re-query from the root element
+    // Teste original
     cy.get('.misc-table').within(() => {
       // ends the current chain and yields null
       cy.contains('Cheryl').click().end()
@@ -27,7 +30,7 @@ context('Misc', () => {
 
     // we can use Cypress.platform string to
     // select appropriate command
-    // https://on.cypress/io/platform
+    // https://on.cypress.io/platform
     cy.log(`Platform ${Cypress.platform} architecture ${Cypress.arch}`)
 
     // on CircleCI Windows build machines we have a failure to run bash shell
@@ -37,7 +40,6 @@ context('Misc', () => {
 
     if (isCircleOnWindows) {
       cy.log('Skipping test on CircleCI')
-
       return
     }
 
@@ -47,7 +49,6 @@ context('Misc', () => {
 
     if (isShippable) {
       cy.log('Skipping test on ShippableCI')
-
       return
     }
 
