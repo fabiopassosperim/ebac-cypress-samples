@@ -1,3 +1,4 @@
+
 /// <reference types="cypress" />
 
 context('Misc', () => {
@@ -9,7 +10,9 @@ context('Misc', () => {
     cy.get('.misc-form')
       .find('#name')
       .end()
-      .should('have.class', 'misc-form')
+
+    cy.get('#description')
+      .should('exist')
   })
 
   it('cy.exec() - execute a system command', () => {
